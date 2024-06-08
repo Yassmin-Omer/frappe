@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    restart: always
+
+  redis-cache:
+    image: redis:alpine
+    restart: always
+
+  redis-queue:
+    image: redis:alpine
+    restart: always
+
+  redis-socketio:
+    image: redis:alpine
+    restart: always
+
+  frappe:
+    build: .
+    environment:
+      REDIS_CACHE: redis-cache:6379
+      REDIS_QUEUE: redis-queue:6379
+      REDIS_SOCKETIO: redis-socketio:6379
+      MARIADB_HOST: mariadb
+      MARIADB_ROOT_PASSWORD: root
+      SITES: site1.local
+    volumes:
+      - ./frappe-bench/sites:/home/frappe/frappe-bench/sites
+      - ./frappe-bench/logs:/home/frappe/frappe-bench/logs
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+      - redis-socketio
+    restart: always
+
+volumes:
+  mariadb-data:
