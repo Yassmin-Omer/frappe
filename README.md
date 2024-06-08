@@ -36,7 +36,7 @@ Initialize Helm:
 
 helm repo add frappe https://helm.erpnext.com
 helm repo update
-Step 2: Building and Pushing the Docker Image
+## Step 2: Building and Pushing the Docker Image
 Clone the Repository
 Clone your Frappe/ERPNext repository:
 
@@ -52,7 +52,7 @@ docker-compse  build -t yassmin970/frappe:latest .
 Push the Docker Image
 Push the Docker image to your registry:
 docker push yassmin970/frappe:latest
-### Step 3: Modifying the Helm Chart
+## Step 3: Modifying the Helm Chart
 Clone the Helm Chart Repository
 Clone the Frappe Helm chart repository and navigate to the chart directory:
 
@@ -70,14 +70,14 @@ images:
     tag: latest
 
 
-### Step 4: Deploying the Application
+## Step 4: Deploying the Application
 Install the Helm Chart
 Navigate to the helm directory and install the Helm chart:
 
 
 
 helm install frappe ./charts/frappe -f ./charts/frappe/values.yaml
-### Step 5: Verifying the Deployment
+## Step 5: Verifying the Deployment
 Check the Status of Your Deployment
 Use kubectl to check the status of your deployment:
 
